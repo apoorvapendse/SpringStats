@@ -46,7 +46,7 @@ print("Wahls Factor: " + str(wahls_factor))
 K = wahls_factor
 P = load
 
-innerdia = 0
+wire_dia = 0
 
 
 permissible_stress = -99999999
@@ -63,28 +63,28 @@ for dia in diaToSult:
         + str(permissible_stress)
     )
     if permissible_stress > induced_stress:
-        innerdia = dia
+        wire_dia = dia
         break
 
-if innerdia == 0:
+if wire_dia == 0:
     print("Error: NO VALID DIAMETER FOUND")
     exit()
 
 
 G = 81370
-Di = innerdia
-D = mean_diameter = C * innerdia
-Do = outer_diameter = 2 * D - innerdia
-solid_length = innerdia * total_turns
+D = mean_diameter = C * wire_dia
+Di = D - wire_dia
+Do = D + wire_dia
+solid_length = wire_dia * total_turns
 total_gap = (total_turns - 1) * 0.5
 N = active_turns = total_turns - 2
-max_deflection = delta = (8 * P * pow(D, 3) * active_turns) / G * pow(innerdia, 4)
+max_deflection = delta = (8 * P * pow(D, 3) * active_turns) / G * pow(wire_dia, 4)
 free_length = solid_length + total_gap + delta
 pitch_of_coil = free_length / (total_turns - 1)
-stiffness = G * pow(innerdia, 4) / 8 * active_turns * pow(D, 3)
+stiffness = G * pow(wire_dia, 4) / 8 * active_turns * pow(D, 3)
 
 
-print("Inner Diameter:" + str(innerdia) + "\n")
+print("Inner Diameter:" + str(Di) + "\n")
 print("Mean Diameter:" + str(mean_diameter) + "\n")
 print("Wahl Factor:" + str(wahls_factor) + "\n")
 print("Material:patented and cold drawn steel wires grade 1" + "\n")
